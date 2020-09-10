@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import './App.css';
+import './styles/app.module';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <h1> Preschool Activities </h1>
       </div>
     );
