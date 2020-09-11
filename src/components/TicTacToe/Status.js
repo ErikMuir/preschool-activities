@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import styles from '../../styles/tic-tac-toe.module';
 
 export default class Status extends PureComponent {
   isWinner() {
@@ -13,16 +14,14 @@ export default class Status extends PureComponent {
   }
 
   getStatus() {
-    if (this.isWinner())
-      return 'Game Over';
+    if (this.isWinner()) return 'Game Over';
 
-    if (this.isDraw())
-      return 'It\'s a Draw!';
+    if (this.isDraw()) return "It's a Draw!";
 
     return `Next Player: ${this.props.xIsNext ? 'X' : 'O'}`;
   }
 
   render() {
-    return <div className="status">{this.getStatus()}</div>;
+    return <div className={styles.status}>{this.getStatus()}</div>;
   }
 }

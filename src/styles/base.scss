@@ -1,26 +1,18 @@
+@import './fonts';
+
 body {
   margin: 1rem;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-weight: 300;
+  color: #333333;
   background-color: #fefefe;
 }
 
-.centered {
-  text-align: center;
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
 }
 
-.bold {
-  font-weight: bold;
-}
-
-.baseline-lg {
-  border-bottom: 3px solid #333333;
-}
-
-.horizontal-spacer-1 {
-  display: inline-block;
-  width: 1rem;
-}
-
-.vertical-spacer-1 {
-  height: 1rem;
+a {
+  text-decoration: none;
+  color: #333333;
 }

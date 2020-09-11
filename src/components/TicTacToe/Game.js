@@ -3,7 +3,7 @@ import Board from './Board';
 import Status from './Status';
 import Controls from './Controls';
 import TicTacToe from './TicTacToe';
-import '../../styles/tic-tac-toe.module';
+import styles from '../../styles/tic-tac-toe.module';
 
 export default class Game extends Component {
   constructor(props) {
@@ -132,16 +132,16 @@ export default class Game extends Component {
     const { history, stepNumber, xIsNext } = this.state;
     const current = history[stepNumber];
     return (
-      <div className="tic-tac-toe">
-        <h1 className="activity-title">Tic-Tac-Toe</h1>
-        <div className="header">
-          <button className="button new-game" onClick={this.newGame}>
+      <div className={styles.tic_tac_toe}>
+        <h1 className={styles.activity_title}>Tic-Tac-Toe</h1>
+        <div className={styles.header}>
+          <button className={`${styles.button} ${styles.new_game}`} onClick={this.newGame}>
             New Game
           </button>
           <Status current={current} xIsNext={xIsNext} />
           <Controls history={history} stepNumber={stepNumber} jumpTo={this.jumpTo} />
         </div>
-        <div className="game">
+        <div className={styles.game}>
           <Board board={current.board} winningLine={current.winningLine} onClick={this.handleClick} />
         </div>
       </div>

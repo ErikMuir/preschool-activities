@@ -1,19 +1,25 @@
 const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = `${process.env.NODE_ENV}`.trim() !== 'production';
+console.log(`*** isDevelopment: ${isDevelopment} ***`);
 
 module.exports = {
-  entry: './src/index.js',
   mode: isDevelopment ? 'development' : 'production',
+  entry: './src/index.js',
+  devtool: isDevelopment ? 'eval-source-map' : undefined,
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
-        options: { presets: ['@babel/env'] },
+        options: { presets: ['@babel/preset-env'] },
+      },
+      {
+        test: /\.(js|jsx)$/,
+        use: 'react-hot-loader/webpack',
       },
       {
         test: /\.css$/,
@@ -27,16 +33,16 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
-              sourceMap: isDevelopment
-            }
+              sourceMap: isDevelopment,
+            },
           },
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: isDevelopment
-            }
-          }
-        ]
+              sourceMap: isDevelopment,
+            },
+          },
+        ],
       },
       {
         test: /\.s(a|c)ss$/,
@@ -47,30 +53,58 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: isDevelopment
-            }
-          }
-        ]
-      }
+              sourceMap: isDevelopment,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(woff(2)?|ttf)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(jpg|jpeg|svg|png|gif)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images/',
+            },
+          },
+        ],
+      },
     ],
   },
-  resolve: { extensions: ['*', '.js', '.jsx', '.scss'] },
+  resolve: {
+    extensions: ['*', '.js', '.jsx', '.scss'],
+  },
   output: {
-    path: path.resolve(__dirname, 'dist/'),
-    publicPath: '/dist/',
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: './',
+    filename: '[name].js',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public/'),
+    contentBase: path.join(__dirname, 'public'),
     port: 3000,
-    publicPath: 'http://localhost:3000/dist/',
+    publicPath: 'http://localhost:3000/',
     hotOnly: true,
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
-    })
+      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve('./src/index.html'),
+    }),
   ],
 };

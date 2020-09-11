@@ -4,9 +4,11 @@
   "description": "A web app consisting of various games and activities for preschool aged children",
   "main": "./src/index.js",
   "scripts": {
-    "build": "webpack --mode development",
-    "build:release": "webpack --mode production",
-    "replaceModules": "rm -rf ./node_modules && rm ./package-lock.json && npm i",
+    "build": "rm -rf ./dist && webpack --mode development",
+    "build:release": "rm -rf ./dist && set NODE_ENV=production && webpack --mode production",
+    "deploy": "npm run build:release && aws s3 sync dist/ s3://simonmuir.com --acl public-read",
+    "DEPRECATED:replace:assets": "rm -rf ./public/fonts && rm -rf ./public/images && cp -r ./src/fonts ./public/fonts && cp -r ./src/images ./public/images",
+    "replace:modules": "rm -rf ./node_modules && rm ./package-lock.json && npm i",
     "start": "webpack-dev-server --mode development",
     "test": "jest ./tests"
   },
@@ -28,6 +30,8 @@
     "@erikmuir/node-utils": "^0.1.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.3.0",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.4.1",
     "jest": "^26.4.2",
     "mini-css-extract-plugin": "^0.11.1",
     "node-sass": "^4.14.1",

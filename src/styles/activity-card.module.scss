@@ -1,0 +1,30 @@
+.activity_card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 12rem;
+  height: 12rem;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background-color: #fefefe;
+  padding: 1rem;
+  margin: 1rem 1rem 0 0;
+  box-shadow: 0.05rem 0.05rem 0.25rem #888888;
+
+  &:hover {
+    background-color: #eeeef099;
+  }
+
+  .image {
+    text-align: center;
+
+    img {
+      width: 10rem;
+    }
+  }
+
+  .name {
+    text-align: right;
+  }
+}

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import ActivityCard from './ActivityCard';
+import TicTacToeImage from '../images/tic-tac-toe.png';
+import styles from '../styles/home.module';
 
 class Home extends Component {
   renderHeader() {
     return (
-      <h1 className="baseline-lg">
+      <h1 className={styles.header}>
         Activities
       </h1>
     );
@@ -14,7 +16,9 @@ class Home extends Component {
     return (
       <div className="home">
         {this.renderHeader()}
-        <Link to="/tic-tac-toe">Tic-Tac-Toe</Link>
+        <div className={styles.activity_grid}>
+          <ActivityCard path="/tic-tac-toe" name="Tic-Tac-Toe" image={TicTacToeImage} />
+        </div>
       </div>
     );
   }

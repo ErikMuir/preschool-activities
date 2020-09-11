@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Row from './Row';
+import styles from '../../styles/tic-tac-toe.module';
 
 export default class Board extends PureComponent {
   renderRow(row) {
@@ -9,7 +10,7 @@ export default class Board extends PureComponent {
 
   render() {
     return (
-      <div className="game-board">
+      <div className={styles.game_board}>
         {this.renderRow(0)}
         {this.renderRow(1)}
         {this.renderRow(2)}

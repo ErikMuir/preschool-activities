@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import styles from '../../styles/tic-tac-toe.module';
 
 export default class Square extends PureComponent {
   isWinningSquare() {
@@ -9,9 +10,11 @@ export default class Square extends PureComponent {
   render() {
     const { square, onClick } = this.props;
     const key = `square__${square.row}-${square.col}`;
-    const styles = `square ${this.isWinningSquare() ? 'winning-square' : ''}`;
+    const classNames = `${styles.square} ${(this.isWinningSquare() ? styles.winning_square : '')}`;
     return (
-      <button key={key} className={styles} onClick={() => onClick(square)}>{square.value}</button>
+      <button key={key} className={classNames} onClick={() => onClick(square)}>
+        {square.value}
+      </button>
     );
   }
 }

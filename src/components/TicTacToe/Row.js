@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Square from './Square';
+import styles from '../../styles/tic-tac-toe.module';
 
 export default class Row extends PureComponent {
   renderSquare(col) {
@@ -10,7 +11,7 @@ export default class Row extends PureComponent {
 
   render() {
     return (
-      <div key={`board-row__${this.props.row}`} className="board-row">
+      <div key={`board-row__${this.props.row}`} className={styles.board_row}>
         {this.renderSquare(0)}
         {this.renderSquare(1)}
         {this.renderSquare(2)}
