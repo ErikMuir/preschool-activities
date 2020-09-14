@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../styles/activity-card.module';
+import styles from '../../styles/activity-card.module';
 
 class ActivityCard extends Component {
   constructor(props) {

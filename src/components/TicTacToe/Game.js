@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ActivityHeader from '../common/ActivityHeader';
 import Board from './Board';
 import Status from './Status';
 import Controls from './Controls';
@@ -9,7 +10,7 @@ export default class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: [
+      gameHistory: [
         {
           board: new TicTacToe(),
           winningLine: [],
@@ -86,8 +87,8 @@ export default class Game extends Component {
   }
 
   handleClick(square) {
-    const { history, stepNumber, xIsNext } = this.state;
-    const currentHistory = history.slice(0, stepNumber + 1);
+    const { gameHistory, stepNumber, xIsNext } = this.state;
+    const currentHistory = gameHistory.slice(0, stepNumber + 1);
     const current = currentHistory[currentHistory.length - 1];
     const board = new TicTacToe(current.board);
     if (current.winningLine.length || square.value) {
@@ -103,7 +104,7 @@ export default class Game extends Component {
       },
     ];
     this.setState({
-      history: currentHistory.concat(newHistory),
+      gameHistory: currentHistory.concat(newHistory),
       stepNumber: currentHistory.length,
       xIsNext: !xIsNext,
     });
@@ -115,7 +116,7 @@ export default class Game extends Component {
 
   newGame() {
     this.setState({
-      history: [
+      gameHistory: [
         {
           board: new TicTacToe(),
           winningLine: [],
@@ -129,22 +130,24 @@ export default class Game extends Component {
   }
 
   render() {
-    const { history, stepNumber, xIsNext } = this.state;
-    const current = history[stepNumber];
+    const { gameHistory, stepNumber, xIsNext } = this.state;
+    const current = gameHistory[stepNumber];
     return (
-      <div className={styles.tic_tac_toe}>
-        <h1 className={styles.activity_title}>Tic-Tac-Toe</h1>
-        <div className={styles.header}>
-          <button className={`${styles.button} ${styles.new_game}`} onClick={this.newGame}>
-            New Game
-          </button>
-          <Status current={current} xIsNext={xIsNext} />
-          <Controls history={history} stepNumber={stepNumber} jumpTo={this.jumpTo} />
+      <>
+        <ActivityHeader activityName="Tic-Tac-Toe" />
+        <div className={styles.tic_tac_toe}>
+          <div className={styles.header}>
+            <button className={`${styles.button} ${styles.new_game}`} onClick={this.newGame}>
+              New Game
+            </button>
+            <Status current={current} xIsNext={xIsNext} />
+            <Controls stepsLength={gameHistory.length} stepNumber={stepNumber} jumpTo={this.jumpTo} />
+          </div>
+          <div className={styles.game}>
+            <Board board={current.board} winningLine={current.winningLine} onClick={this.handleClick} />
+          </div>
         </div>
-        <div className={styles.game}>
-          <Board board={current.board} winningLine={current.winningLine} onClick={this.handleClick} />
-        </div>
-      </div>
+      </>
     );
   }
 }

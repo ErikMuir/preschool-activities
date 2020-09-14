@@ -20,9 +20,9 @@ export default class Controls extends PureComponent {
   }
 
   renderRedo() {
-    const { history, stepNumber, jumpTo } = this.props;
+    const { stepsLength, stepNumber } = this.props;
     const targetStep = stepNumber + 1;
-    const isDisabled = stepNumber === history.length - 1;
+    const isDisabled = stepNumber === stepsLength - 1;
     return (
       <button
         className={`${styles.button} ${styles.undo_redo}`}

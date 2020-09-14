@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ActivityCard from './ActivityCard';
+import ActivityCard from './common/ActivityCard';
 import TicTacToeImage from '../images/tic-tac-toe.png';
 import styles from '../styles/home.module';
 
