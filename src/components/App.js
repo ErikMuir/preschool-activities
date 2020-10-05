@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
-import Home from './Home';
+import Home from './Home/Home';
 import TicTacToe from './TicTacToe/Game';
 import '../styles/base';
 
