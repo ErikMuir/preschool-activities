@@ -10,13 +10,15 @@ const Error = () => <h1>Oops! Page not found!</h1>;
 class App extends PureComponent {
   render() {
     return (
-      <main>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/tic-tac-toe" component={TicTacToe} />
-          <Route component={Error} />
-        </Switch>
-      </main>
+      <div className="main-container">
+        <main>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/tic-tac-toe" component={TicTacToe} />
+            <Route component={Error} />
+          </Switch>
+        </main>
+      </div>
     );
   }
 }
