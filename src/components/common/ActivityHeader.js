@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import MaterialIcon from 'material-icons-react';
 import { Link } from 'react-router-dom';
-import styles from '../../styles/activity-header.module';
-
+import styles from './activity-header.module';
 
 class ActivityHeader extends PureComponent {
   render() {
     const { activityName } = this.props;
+
     return (
       <div className={styles.header}>
         <div className={styles.back}>

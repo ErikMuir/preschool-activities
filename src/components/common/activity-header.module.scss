@@ -3,13 +3,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 1rem;
 
   .back {
     cursor: pointer;
   }
 
   .title {
-    
+    margin: 0;
   }
 
   .spacer {

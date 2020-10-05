@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../../styles/activity-card.module';
-
+import styles from './activity-card.module';
 
 class ActivityCard extends PureComponent {
   render() {

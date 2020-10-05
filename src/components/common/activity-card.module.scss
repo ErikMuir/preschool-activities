@@ -3,13 +3,13 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
-  width: 12rem;
-  height: 12rem;
+  width: 13rem;
+  height: 13rem;
   border: 1px solid #cccccc;
   border-radius: 5px;
   background-color: #fefefe;
-  padding: 1rem;
-  margin: 1rem 1rem 0 0;
+  padding: 2rem;
+  margin: 0.5rem;
   box-shadow: 0.05rem 0.05rem 0.25rem #888888;
 
   &:hover {
@@ -20,11 +20,12 @@
     text-align: center;
 
     img {
-      width: 10rem;
+      width: 12rem;
     }
   }
 
   .name {
     text-align: right;
+    font-size: larger;
   }
 }
