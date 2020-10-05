@@ -7,9 +7,9 @@
     "build": "rm -rf ./dist && webpack --mode development",
     "build:release": "rm -rf ./dist && set NODE_ENV=production && webpack --mode production",
     "deploy": "npm run build:release && aws s3 sync dist/ s3://simonmuir.com --acl public-read",
-    "DEPRECATED:replace:assets": "rm -rf ./public/fonts && rm -rf ./public/images && cp -r ./src/fonts ./public/fonts && cp -r ./src/images ./public/images",
     "replace:modules": "rm -rf ./node_modules && rm ./package-lock.json && npm i",
     "start": "webpack-dev-server --mode development",
+    "start:release": "set NODE_ENV=production && webpack-dev-server --mode production",
     "test": "jest ./tests"
   },
   "repository": {
