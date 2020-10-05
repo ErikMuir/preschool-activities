@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import MaterialIcon from 'material-icons-react';
 import { Link } from 'react-router-dom';
 import styles from '../../styles/activity-header.module';
 
-class ActivityHeader extends Component {
-  constructor(props) {
-    super(props);
-  }
 
+class ActivityHeader extends PureComponent {
   render() {
     const { activityName } = this.props;
     return (

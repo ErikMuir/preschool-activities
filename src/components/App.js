@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import Home from './Home';
@@ -7,7 +7,7 @@ import '../styles/base';
 
 const Error = () => <h1>Oops! Page not found!</h1>;
 
-class App extends Component {
+class App extends PureComponent {
   render() {
     return (
       <main>
