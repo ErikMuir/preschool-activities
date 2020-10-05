@@ -1,5 +1,6 @@
 import { Point, Line, drawLine } from '../common/CanvasHelpers';
-import { player } from './helpers';
+
+const player = { X: 'X', O: 'O' };
 
 const drawBoard = (ctx, boardSize, squareSize) => {
   ctx.strokeStyle = '#333333';
@@ -43,4 +44,4 @@ const drawO = (ctx, center, size) => {
   ctx.stroke();
 };
 
-export { drawBoard, drawSquare };
+export { player, drawBoard, drawSquare };

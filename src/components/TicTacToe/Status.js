@@ -1,27 +1,17 @@
-import React, { PureComponent } from 'react';
-import styles from '../../styles/tic-tac-toe.module';
+import React from 'react';
+import { player } from './helpers';
 
-export default class Status extends PureComponent {
-  isWinner() {
-    const { winningLine } = this.props.current;
-    return !!(winningLine && winningLine.length);
+const Status = ({ board, xIsNext }) => {
+  if (board.getWinner()) {
+    return <div>Game Over!</div>;
   }
 
-  isDraw() {
-    const { board } = this.props.current;
-    const squares = board.squares;
-    return squares.every(square => square.value !== null);
+  if (board.isDraw()) {
+    return <div>It's a Draw!</div>;
   }
 
-  getStatus() {
-    if (this.isWinner()) return 'Game Over';
+  const nextPlayer = xIsNext ? player.X : player.O;
+  return <div>Next Player: {nextPlayer}</div>;
+};
 
-    if (this.isDraw()) return "It's a Draw!";
-
-    return `Next Player: ${this.props.xIsNext ? 'X' : 'O'}`;
-  }
-
-  render() {
-    return <div className={styles.status}>{this.getStatus()}</div>;
-  }
-}
+export default Status;

@@ -1,108 +1,56 @@
 import React, { Component } from 'react';
 import ActivityHeader from '../common/ActivityHeader';
-import Board from './Board';
+import CanvasContainer from '../common/CanvasContainer';
 import Status from './Status';
 import Controls from './Controls';
 import TicTacToe from './TicTacToe';
-import styles from '../../styles/tic-tac-toe.module';
+import { player, drawBoard, drawSquare } from './helpers';
+import styles from './tic-tac-toe.module';
 
 export default class Game extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      gameHistory: [
-        {
-          board: new TicTacToe(),
-          winningLine: [],
-          player: null,
-          coords: null,
-        },
-      ],
+      gameHistory: [{ board: new TicTacToe() }],
       stepNumber: 0,
       xIsNext: true,
     };
     this.handleClick = this.handleClick.bind(this);
     this.jumpTo = this.jumpTo.bind(this);
     this.newGame = this.newGame.bind(this);
+    this.draw = this.draw.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
-  getWinningLine(board) {
-    const lines = [
-      // horizontal
-      [
-        [0, 0],
-        [0, 1],
-        [0, 2],
-      ],
-      [
-        [1, 0],
-        [1, 1],
-        [1, 2],
-      ],
-      [
-        [2, 0],
-        [2, 1],
-        [2, 2],
-      ],
-      // vertical
-      [
-        [0, 0],
-        [1, 0],
-        [2, 0],
-      ],
-      [
-        [0, 1],
-        [1, 1],
-        [2, 1],
-      ],
-      [
-        [0, 2],
-        [1, 2],
-        [2, 2],
-      ],
-      // diagonal
-      [
-        [0, 0],
-        [1, 1],
-        [2, 2],
-      ],
-      [
-        [0, 2],
-        [1, 1],
-        [2, 0],
-      ],
-    ];
-
-    for (let i = 0; i < lines.length; i++) {
-      const [[rowA, colA], [rowB, colB], [rowC, colC]] = lines[i];
-      const squareA = board.squares.find(sq => sq.row === rowA && sq.col === colA);
-      const squareB = board.squares.find(sq => sq.row === rowB && sq.col === colB);
-      const squareC = board.squares.find(sq => sq.row === rowC && sq.col === colC);
-      if (squareA.value && squareA.value === squareB.value && squareA.value === squareC.value) {
-        return lines[i];
-      }
-    }
-
-    return [];
+  getPosition(val, squareSize) {
+    if (val < squareSize) return 0;
+    if (val < squareSize * 2) return 1;
+    return 2;
   }
 
-  handleClick(square) {
+  onClick(e) {
+    const { devicePixelRatio: ratio = 1 } = window;
+    const canvas = e.target;
+    const rect = canvas.getBoundingClientRect();
+    const squareSize = (rect.width / 3) / ratio;
+    const x = (e.clientX - rect.left) / ratio;
+    const y = (e.clientY - rect.top) / ratio;
+    const col = this.getPosition(x, squareSize);
+    const row = this.getPosition(y, squareSize);
+    this.handleClick(col, row);
+  }
+
+  handleClick(col, row) {
     const { gameHistory, stepNumber, xIsNext } = this.state;
     const currentHistory = gameHistory.slice(0, stepNumber + 1);
-    const current = currentHistory[currentHistory.length - 1];
-    const board = new TicTacToe(current.board);
-    if (current.winningLine.length || square.value) {
+    const currentBoard = currentHistory[currentHistory.length - 1].board;
+    const square = currentBoard.squares.find(sq => sq.col === col && sq.row === row);
+    if (square.value || currentBoard.getWinner()) {
       return;
     }
-    board.setSquareValue(square.row, square.col, xIsNext ? 'X' : 'O');
-    const newHistory = [
-      {
-        board,
-        winningLine: this.getWinningLine(board),
-        player: xIsNext ? 'X' : 'O',
-        coords: square.friendlyName,
-      },
-    ];
+    const board = new TicTacToe(currentBoard);
+    board.setSquareValue(square.row, square.col, xIsNext ? player.X : player.O);
+    const newHistory = [{ board }];
     this.setState({
       gameHistory: currentHistory.concat(newHistory),
       stepNumber: currentHistory.length,
@@ -116,36 +64,43 @@ export default class Game extends Component {
 
   newGame() {
     this.setState({
-      gameHistory: [
-        {
-          board: new TicTacToe(),
-          winningLine: [],
-          player: null,
-          coords: null,
-        },
-      ],
+      gameHistory: [{ board: new TicTacToe() }],
       stepNumber: 0,
       xIsNext: true,
     });
   }
 
+  draw(ctx) {
+    const { gameHistory, stepNumber } = this.state;
+    const currentHistory = gameHistory.slice(0, stepNumber + 1);
+    const current = currentHistory[currentHistory.length - 1];
+    const board = current.board;
+    const { devicePixelRatio: ratio = 1 } = window;
+    const boardSize = ctx.canvas.width / ratio;
+    const squareSize = boardSize / 3;
+
+    ctx.lineWidth = 2;
+    board.squares.forEach(sq => drawSquare(ctx, sq, squareSize));
+    drawBoard(ctx, boardSize, squareSize);
+  }
+
   render() {
     const { gameHistory, stepNumber, xIsNext } = this.state;
-    const current = gameHistory[stepNumber];
+    const currentBoard = gameHistory[stepNumber].board;
     return (
       <>
         <ActivityHeader activityName="Tic-Tac-Toe" />
         <div className={styles.tic_tac_toe}>
           <div className={styles.header}>
-            <button className={`${styles.button} ${styles.new_game}`} onClick={this.newGame}>
-              New Game
-            </button>
-            <Status current={current} xIsNext={xIsNext} />
-            <Controls stepsLength={gameHistory.length} stepNumber={stepNumber} jumpTo={this.jumpTo} />
+            <Controls
+              stepsLength={gameHistory.length}
+              stepNumber={stepNumber}
+              newGame={this.newGame}
+              jumpTo={this.jumpTo}
+            />
+            <Status board={currentBoard} xIsNext={xIsNext} />
           </div>
-          <div className={styles.game}>
-            <Board board={current.board} winningLine={current.winningLine} onClick={this.handleClick} />
-          </div>
+          <CanvasContainer draw={this.draw} className={styles.tic_tac_toe_canvas_container} onClick={this.onClick} />
         </div>
       </>
     );
