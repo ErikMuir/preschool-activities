@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import Home from './Home/Home';
 import TicTacToe from './TicTacToe/Game';
+import styles from './app.module';
 import '../styles/base';
 
 const Error = () => <h1>Oops! Page not found!</h1>;
@@ -10,7 +11,7 @@ const Error = () => <h1>Oops! Page not found!</h1>;
 class App extends PureComponent {
   render() {
     return (
-      <div className="main-container">
+      <div className={styles.main_container}>
         <main>
           <Switch>
             <Route exact path="/" component={Home} />

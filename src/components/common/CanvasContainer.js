@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 import Canvas from './Canvas';
+import styles from './canvas-container.module';
 
 export default class CanvasContainer extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export default class CanvasContainer extends Component {
     const { className, draw, onClick } = this.props;
     const { width, height } = this.state;
     return (
-      <div ref={this.myRef} className={`canvas-container ${className}`}>
+      <div ref={this.myRef} className={`${styles.canvas_container} ${className}`}>
         <Canvas draw={draw} onClick={onClick} width={width} height={height} />
       </div>
     );
