@@ -32,7 +32,7 @@ export default class Game extends Component {
     const { devicePixelRatio: ratio = 1 } = window;
     const canvas = e.target;
     const rect = canvas.getBoundingClientRect();
-    const squareSize = (rect.width / 3) / ratio;
+    const squareSize = rect.width / 3 / ratio;
     const x = (e.clientX - rect.left) / ratio;
     const y = (e.clientY - rect.top) / ratio;
     const col = this.getPosition(x, squareSize);
